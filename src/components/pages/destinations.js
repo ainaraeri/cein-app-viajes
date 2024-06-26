@@ -1,28 +1,53 @@
-import React, { useEffect, useState } from 'react';
+// destinations.js
+
+import React, { useState } from 'react';
+import fetchFilteredPosts from './apiservice'; // Ajusta la ruta según la ubicación real de ApiService.js
 
 const Destinations = () => {
-  const [posts, setPosts] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
-  useEffect(() => {
-    const filteredPosts = JSON.parse(localStorage.getItem('filteredPosts'));
-    setPosts(filteredPosts || []);
-  }, []);
+  const handleFetchPosts = async () => {
+    try {
+      const normalizedTags = tags.map(tag => tag.toLowerCase().trim()); // Normalizar las etiquetas
+  
+      const response = await fetchFilteredPosts(normalizedTags);
+      setFilteredPosts(response);
+    } catch (error) {
+      console.error('Error fetching filtered posts:', error);
+      // Manejar el error de manera apropiada
+    }
+  };
+  
+  const handleTagsChange = (event) => {
+    setTags(event.target.value.split(',').map(tag => tag.trim().toLowerCase())); // Normalizar las etiquetas al ingresarlas
+  };
+  
 
   return (
     <div>
-      <h1>Destinos Recomendados</h1>
-      {posts.length === 0 ? (
-        <p>No se encontraron destinos que coincidan con tus respuestas.</p>
-      ) : (
-        posts.map(post => (
-          <div key={post.id}>
-            <h2>{post.title.rendered}</h2>
-            <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+      <input type="text" placeholder="Introduce etiquetas separadas por coma" onChange={handleTagsChange} />
+      <button onClick={handleFetchPosts}>Filtrar Posts</button>
+
+      <div>
+        {filteredPosts.length > 0 ? (
+          <div>
+            <h2>Posts Filtrados</h2>
+            <ul>
+              {filteredPosts.map(post => (
+                <li key={post.id}>
+                  <h3>{post.title.rendered}</h3>
+                  <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                </li>
+              ))}
+            </ul>
           </div>
-        ))
-      )}
+        ) : (
+          <p>No se encontraron posts que coincidan con las etiquetas seleccionadas.</p>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default Destinations;

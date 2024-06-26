@@ -18,22 +18,22 @@ const questions = [
 
 const mappings = {
   "¿Con quién te vas de viaje?": {
-    "Sola": "sola",
-    "2-3 amigas": "amigas",
-    "Pareja": "pareja",
-    "Familia": "familia"
+    "Sola": "Sola",
+    "2-3 amigas": "Amigas",
+    "Pareja": "Pareja",
+    "Familia": "Familia"
   },
   "¿Cuántos días tienes?": {
-    "2-3 días": "corto",
-    "5-7 días": "semana",
-    "15 días": "quincena",
-    "1 mes": "largo"
+    "2-3 días": "Corto",
+    "5-7 días": "Semana",
+    "15 días": "Quincena",
+    "1 mes": "Largo"
   },
   "¿Qué te interesa?": {
-    "Las ciudades": "ciudad",
-    "Naturaleza": "naturaleza",
-    "Cultura": "cultura",
-    "Relax": "relax"
+    "Las ciudades": "Ciudad",
+    "Naturaleza": "Naturaleza",
+    "Cultura": "Cultura",
+    "Relax": "Relax"
   }
 };
 

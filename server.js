@@ -7,40 +7,32 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Ruta para manejar la solicitud POST desde el frontend
 app.post('/api/filter-posts', async (req, res) => {
-  const { responses } = req.body;
+  let { tags } = req.body;
+  tags = tags.map(tag => tag.toLowerCase().trim()); // Normalizar las etiquetas
 
   try {
-    // Mapear respuestas a etiquetas
-    const tags = responses.map(response => {
-      // Buscar la etiqueta correspondiente en el mapeo
-      for (const question in mappings) {
-        if (mappings[question][response]) {
-          return mappings[question][response];
-        }
-      }
-      return null; // Manejar casos donde la respuesta no se mapea a ninguna etiqueta
-    }).filter(tag => tag !== null); // Filtrar etiquetas nulas, si las hay
-
-
-    console.log('Tags:', tags);
-
-    // Lógica para filtrar posts basada en las etiquetas
+    // Lógica para filtrar posts del blog JustPackAndBreathe.com basado en las etiquetas
     const response = await axios.get('https://justpackandbreathe.com/wp-json/wp/v2/posts');
     const posts = response.data;
 
-    // Filtra los posts según las etiquetas
+    // Filtra los posts según las etiquetas recibidas
     const filteredPosts = posts.filter(post => {
-      // Lógica de filtrado, comprobando si las etiquetas de los posts coinciden con las etiquetas dadas
-      return tags.some(tag => post.title.rendered.includes(tag) || post.content.rendered.includes(tag));
+      // Compara las etiquetas del post con las etiquetas recibidas
+      return tags.some(tag => 
+        post.tags.some(postTag => postTag.toLowerCase().includes(tag))
+      );
     });
 
+    console.log('Posts filtrados:', filteredPosts);
     res.json(filteredPosts);
-    
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching posts', error: error.message });
+    console.error('Error fetching filtered posts:', error);
+    res.status(500).json({ message: 'Error fetching filtered posts', error: error.message });
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
