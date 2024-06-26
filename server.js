@@ -1,79 +1,48 @@
 const express = require('express');
-const path = require('path');
 const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-const bodyParser = require('body-parser');
-
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Servir archivos estáticos desde la carpeta 'build'
-app.use(express.static(path.join(__dirname, 'webpack/build')));
-
-// Ruta para manejar el cuestionario y filtrar los posts
 app.post('/api/filter-posts', async (req, res) => {
-  console.log('Solicitud POST recibida en /api/filter-posts');
-  console.log('Body:', req.body);
-
   const { responses } = req.body;
 
-  // Lógica para mapear las respuestas a etiquetas y filtrar posts
-  const mappings = {
-    "¿Con quién te vas de viaje?": {
-      "Sola": "sola",
-      "2-3 amigas": "amigas",
-      "Pareja": "pareja",
-      "Familia": "familia"
-    },
-    "¿Cuántos días tienes?": {
-      "2-3 días": "corto",
-      "5-7 días": "semana",
-      "15 días": "quincena",
-      "1 mes": "largo"
-    },
-    "¿Qué te interesa?": {
-      "Las ciudades": "ciudad",
-      "Naturaleza": "naturaleza",
-      "Cultura": "cultura",
-      "Relax": "relax"
-    }
-  };
-
-  const [companion, days, type] = responses;
-  const tags = [
-    mappings["¿Con quién te vas de viaje?"][companion],
-    mappings["¿Cuántos días tienes?"][days],
-    mappings["¿Qué te interesa?"][type]
-  ];
-
-  console.log('Tags:', tags);
-
   try {
-    const response = await axios.get('https://justpackandbreathe.com/wp-json/wp/v2/posts', {
-      params: {
-        tags: tags.join(','), // Filtrar por tags
-        per_page: 100
+    // Mapear respuestas a etiquetas
+    const tags = responses.map(response => {
+      // Buscar la etiqueta correspondiente en el mapeo
+      for (const question in mappings) {
+        if (mappings[question][response]) {
+          return mappings[question][response];
+        }
       }
+      return null; // Manejar casos donde la respuesta no se mapea a ninguna etiqueta
+    }).filter(tag => tag !== null); // Filtrar etiquetas nulas, si las hay
+
+
+    console.log('Tags:', tags);
+
+    // Lógica para filtrar posts basada en las etiquetas
+    const response = await axios.get('https://justpackandbreathe.com/wp-json/wp/v2/posts');
+    const posts = response.data;
+
+    // Filtra los posts según las etiquetas
+    const filteredPosts = posts.filter(post => {
+      // Lógica de filtrado, comprobando si las etiquetas de los posts coinciden con las etiquetas dadas
+      return tags.some(tag => post.title.rendered.includes(tag) || post.content.rendered.includes(tag));
     });
 
-    const filteredPosts = response.data.filter(post => post.meta.days === parseInt(days, 10));
-
-    res.json({ posts: filteredPosts }); // Enviar los posts filtrados como respuesta
+    res.json(filteredPosts);
+    
   } catch (error) {
-    console.error("Error fetching posts", error);
-    res.status(500).send(error.message); // Enviar un error 500 si hay algún problema
+    res.status(500).json({ message: 'Error fetching posts', error: error.message });
   }
-});
-
-// Ruta para manejar todas las demás solicitudes y servir la aplicación React
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'webpack/build', 'index.html')); 
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
