@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import fetchFilteredPosts from './apiservice'; // Asegúrate de importar correctamente
+import React, { useState, useEffect } from 'react';
+import fetchFilteredPosts from './apiservice';
+import '../../style/destinations.scss'; // Asegúrate de tener un archivo CSS para los estilos
 
 const Destinations = ({ location }) => {
   const [posts, setPosts] = useState([]);
@@ -40,17 +40,19 @@ const Destinations = ({ location }) => {
   return (
     <div className="destinations">
       <h1>Destinos filtrados</h1>
-      {posts.map(post => (
-        <div key={post.id} className="post">
-          <h2>{post.title.rendered}</h2>
-          {post.featuredImage && (
-            <img src={post.featuredImage} alt={post.title.rendered} />
-          )}
-          <a href={post.link} target="_blank" rel="noopener noreferrer">
-            Leer más
-          </a>
-        </div>
-      ))}
+      <div className="grid">
+        {posts.map(post => (
+          <div key={post.id} className="post">
+            <h2>{post.title.rendered}</h2>
+            {post.featuredImage && (
+              <img src={post.featuredImage} alt={post.title.rendered} />
+            )}
+            <a href={post.link} target="_blank" rel="noopener noreferrer">
+              Leer más
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
