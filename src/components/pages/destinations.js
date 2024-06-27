@@ -1,34 +1,41 @@
-// destinations.js
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import fetchFilteredPosts from './apiservice'; // Ajusta la ruta según la ubicación real de ApiService.js
+import { useLocation } from 'react-router-dom';
 
 const Destinations = () => {
   const [tags, setTags] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const location = useLocation();
 
-  const handleFetchPosts = async () => {
+
+  useEffect(() => {
+    const { state } = location;
+    if (state && state.tags) {
+      const normalizedTags = state.tags.map(tag => tag.toLowerCase().trim());
+      handleFetchPosts(normalizedTags);
+    }
+  }, [location]);
+
+
+  const handleFetchPosts = async (tags) => {
     try {
-      const normalizedTags = tags.map(tag => tag.toLowerCase().trim()); // Normalizar las etiquetas
-  
-      const response = await fetchFilteredPosts(normalizedTags);
+      const response = await fetchFilteredPosts(tags);
       setFilteredPosts(response);
     } catch (error) {
       console.error('Error fetching filtered posts:', error);
       // Manejar el error de manera apropiada
     }
   };
+
   
-  const handleTagsChange = (event) => {
+  /*/const handleTagsChange = (event) => {
     setTags(event.target.value.split(',').map(tag => tag.trim().toLowerCase())); // Normalizar las etiquetas al ingresarlas
-  };
+  };/*/
   
+
 
   return (
     <div>
-      <input type="text" placeholder="Introduce etiquetas separadas por coma" onChange={handleTagsChange} />
-      <button onClick={handleFetchPosts}>Filtrar Posts</button>
-
       <div>
         {filteredPosts.length > 0 ? (
           <div>

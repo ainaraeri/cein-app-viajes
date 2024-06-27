@@ -52,7 +52,7 @@ export default function Questions() {
     const tags = responses.map((response, index) => {
       const question = questions[index].questionText;
       return mappings[question][response];
-    });
+    }).filter(tag => tag !== undefined); // Filtra respuestas no respondidas
 
     console.log('Etiquetas:', tags); // Imprime las etiquetas mapeadas en la consola
 
