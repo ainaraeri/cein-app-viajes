@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import fetchFilteredPosts from './apiservice'; // Asegúrate de importar correctamente
 
-const Destinations = () => {
-  const location = useLocation();
-  const tags = location.state?.tags || [];
-
+const Destinations = ({ location }) => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const tags = location.state?.tags || [];
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -14,29 +15,42 @@ const Destinations = () => {
         const filteredPosts = await fetchFilteredPosts(tags);
         setPosts(filteredPosts);
       } catch (error) {
-        console.error('Error fetching posts:', error);
-        // Maneja el error adecuadamente
+        setError('Error fetching posts');
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPosts();
   }, [tags]);
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   if (posts.length === 0) {
-    return <p>No se encontraron destinos con las etiquetas seleccionadas.</p>;
+    return <p>No se encontraron posts que coincidan con las etiquetas seleccionadas.</p>;
   }
 
   return (
-    <div>
-      <h2>Destinos filtrados:</h2>
-      <ul>
-        {posts.map(post => (
-          <li key={post.id}>
-            <h3>{post.title.rendered}</h3>
-            <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-          </li>
-        ))}
-      </ul>
+    <div className="destinations">
+      <h1>Destinos filtrados</h1>
+      {posts.map(post => (
+        <div key={post.id} className="post">
+          <h2>{post.title.rendered}</h2>
+          {post.featuredImage && (
+            <img src={post.featuredImage} alt={post.title.rendered} />
+          )}
+          <a href={post.link} target="_blank" rel="noopener noreferrer">
+            Leer más
+          </a>
+        </div>
+      ))}
     </div>
   );
 };
