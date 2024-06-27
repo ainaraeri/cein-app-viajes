@@ -1,47 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import fetchFilteredPosts from './apiservice'; // Asegúrate de que la ruta es correcta
 import { useLocation } from 'react-router-dom';
+import fetchFilteredPosts from './apiservice'; // Asegúrate de importar correctamente
 
 const Destinations = () => {
-  const [filteredPosts, setFilteredPosts] = useState([]);
   const location = useLocation();
+  const tags = location.state?.tags || [];
+
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const { state } = location;
-    if (state && state.tags) {
-      console.log('Etiquetas en Destinations:', state.tags); // Verificar etiquetas recibidas
-      handleFetchPosts(state.tags);
-    }
-  }, [location]);
+    const fetchPosts = async () => {
+      try {
+        const filteredPosts = await fetchFilteredPosts(tags);
+        setPosts(filteredPosts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        // Maneja el error adecuadamente
+      }
+    };
 
-  const handleFetchPosts = async (tags) => {
-    try {
-      const response = await fetchFilteredPosts(tags);
-      setFilteredPosts(response);
-    } catch (error) {
-      console.error('Error fetching filtered posts:', error);
-    }
-  };
+    fetchPosts();
+  }, [tags]);
+
+  if (posts.length === 0) {
+    return <p>No se encontraron destinos con las etiquetas seleccionadas.</p>;
+  }
 
   return (
     <div>
-      <div>
-        {filteredPosts.length > 0 ? (
-          <div>
-            <h2>Posts Filtrados</h2>
-            <ul>
-              {filteredPosts.map(post => (
-                <li key={post.id}>
-                  <h3>{post.title.rendered}</h3>
-                  <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <p>No se encontraron posts que coincidan con las etiquetas seleccionadas.</p>
-        )}
-      </div>
+      <h2>Destinos filtrados:</h2>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>
+            <h3>{post.title.rendered}</h3>
+            <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
