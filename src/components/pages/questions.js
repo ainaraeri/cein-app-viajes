@@ -18,27 +18,27 @@ const questions = [
 
 const mappings = {
   "¿Con quién te vas de viaje?": {
-    "Sola": "Sola",
-    "2-3 amigas": "Amigas",
-    "Pareja": "Pareja",
-    "Familia": "Familia"
+    "Sola": "sola",
+    "2-3 amigas": "amigas",
+    "Pareja": "pareja",
+    "Familia": "familia"
   },
   "¿Cuántos días tienes?": {
-    "2-3 días": "Corto",
-    "5-7 días": "Semana",
-    "15 días": "Quincena",
-    "1 mes": "Largo"
+    "2-3 días": "corto",
+    "5-7 días": "semana",
+    "15 días": "quincena",
+    "1 mes": "largo"
   },
   "¿Qué te interesa?": {
-    "Las ciudades": "Ciudad",
-    "Naturaleza": "Naturaleza",
-    "Cultura": "Cultura",
-    "Relax": "Relax"
+    "Las ciudades": "ciudad",
+    "Naturaleza": "naturaleza",
+    "Cultura": "cultura",
+    "Relax": "relax"
   }
 };
 
 export default function Questions() {
-  const [responses, setResponses] = useState([]);
+  const [responses, setResponses] = useState(Array(questions.length).fill(null));
   const history = useHistory();
 
   const handleOptionChange = (questionIndex, option) => {
@@ -48,16 +48,13 @@ export default function Questions() {
   };
 
   const handleSubmit = () => {
-    // Mapear respuestas a etiquetas según el mapeo definido
     const tags = responses.map((response, index) => {
       const question = questions[index].questionText;
       return mappings[question][response];
-    });
+    }).filter(tag => tag !== undefined);
 
     console.log('Etiquetas:', tags); // Imprime las etiquetas mapeadas en la consola
 
-    // Aquí podrías enviar las etiquetas al backend o hacer cualquier otra lógica necesaria
-    // Por ejemplo, redirigir a otra página pasando las etiquetas como parámetro en el estado
     history.push('/destinations', { tags });
   };
 

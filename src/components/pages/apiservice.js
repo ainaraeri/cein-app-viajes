@@ -1,19 +1,24 @@
-// ApiService.js
-
 import axios from 'axios';
 
 const fetchFilteredPosts = async (tags) => {
+  console.log('Etiquetas recibidas en fetchFilteredPosts:', tags); // Verificar etiquetas recibidas
+
   try {
     const response = await axios.get('https://justpackandbreathe.com/wp-json/wp/v2/posts');
     const posts = response.data;
+
     const normalizedTags = tags.map(tag => tag.toLowerCase().trim());
+    console.log('Etiquetas normalizadas:', normalizedTags); // Verificar etiquetas normalizadas
 
     const filteredPosts = posts.filter(post => {
-      return tags.some(tag => 
-        post.title.rendered.toLowerCase().includes(tag.toLowerCase()) ||
-        post.content.rendered.toLowerCase().includes(tag.toLowerCase())
+      const postTitle = post.title.rendered.toLowerCase();
+      const postContent = post.content.rendered.toLowerCase();
+      return normalizedTags.some(tag => 
+        postTitle.includes(tag) || postContent.includes(tag)
       );
     });
+
+    console.log('Posts filtrados:', filteredPosts); // Verificar posts filtrados
 
     return filteredPosts;
   } catch (error) {
