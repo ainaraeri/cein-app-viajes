@@ -19,6 +19,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .container {
@@ -31,3 +33,20 @@ body {
     display: grid;
     justify-items: center;
 }
+
+h1 {
+    text-align: center;
+    font-size: 22px;
+    color: #328663;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 18px;
+    color: #328663;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+

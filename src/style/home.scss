@@ -9,10 +9,10 @@
   
   .introduction-left {
     flex: 1;
-    padding: 20px;
+    padding: 10px;
   
     h1, p {
-      text-align: left;
+      text-align: center;
       padding-left: 40px;
     }
   
@@ -40,7 +40,7 @@
   .grid-container {
     display: flex;
     flex-direction: column;
-    padding: 20px; /* Ajusta según el margen deseado entre filas */
+    padding: 10px; /* Ajusta según el margen deseado entre filas */
   }
   
   .grid-row {
@@ -80,3 +80,136 @@
     text-align: center;
     
   }
+
+  .video-container {
+    position: relative;
+    height: 100vh;
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-heading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 3rem;
+      text-align: center;
+    }
+  }
+  
+  .intro-section {
+    padding: 2rem;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    .home-heading {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .btn-wrapper {
+      margin-top: 1rem;
+      .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        color: white;
+        background-color: #7FBEA9;
+        border: none;
+        cursor: pointer;
+        &:hover {
+          background-color: #36926C;
+        }
+      }
+    }
+  }
+  
+  .features-section, .destinations-section, .testimonials-section, .team-section {
+    padding: 2rem;
+    .grid-container {
+      display: grid;
+      gap: 1rem;
+      .grid-row {
+        display: flex;
+        justify-content: space-between;
+        .grid-item {
+          flex: 1;
+          margin: 0.5rem;
+        }
+      }
+    }
+  }
+  
+  .features-section {
+    .feature-item {
+      padding: 1rem;
+      background-color: #f0f0f0;
+      border-radius: 0.5rem;
+      h3 {
+        margin-bottom: 0.5rem;
+      }
+      p {
+        margin: 0;
+      }
+    }
+  }
+  
+  .destinations-section {
+    .destination-item {
+      position: relative;
+      height: 200px;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+      color: white;
+      h3 {
+        margin: 0;
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+  
+  .testimonials-section {
+    .testimonial-item {
+      padding: 1rem;
+      background-color: #f0f0f0;
+      border-radius: 0.5rem;
+      p {
+        font-style: italic;
+      }
+      h4 {
+        text-align: center;
+        margin-top: 1rem;
+      }
+    }
+  }
+  
+  .team-section {
+    .team-member {
+      text-align: center;
+      img {
+        width: 50%;
+        height: auto;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+      }
+      h4 {
+        margin: 0.5rem 0 0.25rem;
+      }
+      p {
+        margin: 0;
+        color: #777;
+      }
+    }
+  }
+  

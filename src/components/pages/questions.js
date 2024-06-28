@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import '../../style/questions.scss';
+
 
 const questions = [
   {
@@ -13,7 +15,7 @@ const questions = [
   {
     questionText: '¿Qué te interesa?',
     options: ['Las ciudades', 'Naturaleza', 'Cultura', 'Relax']
-  }
+  },
 ];
 
 const mappings = {
@@ -30,11 +32,11 @@ const mappings = {
     "1 mes": "Largo"
   },
   "¿Qué te interesa?": {
-    "Las ciudades": "Ciudad",
+    "Las ciudades": "Urbano",
     "Naturaleza": "Naturaleza",
     "Cultura": "Cultura",
     "Relax": "Relax"
-  }
+  },
 };
 
 export default function Questions() {
@@ -59,26 +61,39 @@ export default function Questions() {
   };
 
   return (
-    <div className="questions">
-      <h1>Responde a estas preguntas y descubre tu próximo destino</h1>
-      {questions.map((question, questionIndex) => (
-        <div key={questionIndex}>
-          <h3>{question.questionText}</h3>
-          {question.options.map((option, optionIndex) => (
-            <div key={optionIndex}>
-              <input
-                type="radio"
-                name={`question-${questionIndex}`}
-                value={option}
-                checked={responses[questionIndex] === option}
-                onChange={() => handleOptionChange(questionIndex, option)}
-              />
-              <label>{option}</label>
+    <div className="questions-container">
+      <div
+        className="image-column"
+        style={{
+          backgroundImage: `url('/assets/images/marsella.jpg')`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      <div className="form-column">
+        <h1>Responde a estas preguntas y descubre tu próximo destino</h1>
+        <div className="questions">
+          {questions.map((question, questionIndex) => (
+            <div key={questionIndex} className="question-block">
+              <h3>{question.questionText}</h3>
+              {question.options.map((option, optionIndex) => (
+                <div key={optionIndex} className="option">
+                  <input
+                    type="radio"
+                    name={`question-${questionIndex}`}
+                    value={option}
+                    checked={responses[questionIndex] === option}
+                    onChange={() => handleOptionChange(questionIndex, option)}
+                  />
+                  <label>{option}</label>
+                </div>
+              ))}
             </div>
           ))}
         </div>
-      ))}
-      <button onClick={handleSubmit}>Enviar respuestas</button>
+        <button className="submit-button" onClick={handleSubmit}>Enviar respuestas</button>
+      </div>
     </div>
   );
-}
+};
