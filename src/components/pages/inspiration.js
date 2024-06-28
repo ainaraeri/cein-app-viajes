@@ -1,7 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import Questions from "./questions";
 import "../../style/home.scss";
 
 export default function () {
@@ -134,6 +132,6 @@ export default function () {
         </div>
       </div>
 
-    </div>
+      </div>
   );
 }
