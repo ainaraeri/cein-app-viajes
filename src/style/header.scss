@@ -1,61 +1,65 @@
-// Header.scss
-
 .header {
-    padding: 5px 0;
-    width: 100%;
-    border-bottom: 1px solid #ddd;
+  padding: 5px 0;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
 
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-  
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-    }
-  
-    .logo {
-      width: 120px; /* Ancho máximo del logo */
-      height: auto;
-      margin-right: auto; /* Empuja el logo hacia la izquierda */
-    }
-  
-    .logo img {
-      max-width: 50%;
-      height: auto;
-      display: block; /* Evita espacios innecesarios */
-    }
-  
-    .navigation ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: flex-end; /* Alinea los elementos al final */
-    }
-  
-    .navigation ul li {
-      margin-left: 20px; /* Espaciado entre elementos del menú */
-    }
-  
-    .navigation ul li:first-child {
-      margin-left: 0; /* Elimina el margen izquierdo del primer elemento */
-    }
-  
-    .navigation ul li a {
-      text-decoration: none;
-      color: #7FBEA9;
-      font-weight: bold;
-      transition: color 0.3s ease;
-      font-size: 14px;
-    }
-  
-    .navigation ul li a:hover {
-      color: #36926C;
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    flex-direction: column; /* Para alinear los elementos en columna si es necesario */
+
+    @media (min-width: 768px) {
+      flex-direction: row; /* Para alinear los elementos en fila en pantallas más grandes */
+      justify-content: space-between; /* Espaciar los elementos en los extremos en pantallas grandes */
     }
   }
-  
+
+  .logo {
+    width: 120px; /* Ancho máximo del logo */
+    height: auto;
+    margin-right: auto; /* Empuja el logo hacia la izquierda */
+ 
+  }
+
+  .logo img {
+    max-width: 50%;
+    height: auto;
+    display: block; /* Evita espacios innecesarios */
+    
+  }
+
+  .navigation ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos al final */
+  }
+
+  .navigation ul li {
+    margin-left: 20px; /* Espaciado entre elementos del menú */
+  }
+
+  .navigation ul li:first-child {
+    margin-left: 0; /* Elimina el margen izquierdo del primer elemento */
+  }
+
+  .navigation ul li a {
+    text-decoration: none;
+    color: #7fbea9;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    font-size: 14px;
+  }
+
+  .navigation ul li a:hover {
+    color: #36926c;
+  }
+}

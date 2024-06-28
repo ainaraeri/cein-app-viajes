@@ -1,10 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../../style/header.scss"; // Asegúrate de importar el archivo SCSS donde defines los estilos
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-const Header = () => {
+function Header() {
   return (
     <header className="header">
       <div className="container">
@@ -29,6 +27,6 @@ const Header = () => {
       </div>
     </header>
   );
-};
+}
 
 export default Header;

@@ -6,6 +6,8 @@ import Destinations from './pages/destinations';
 import Inspiration from './pages/inspiration';
 import About from './pages/about';
 import Header from './pages/header';
+import { redirect } from "react-router";
+
 
 export default class App extends Component {
   render() {
@@ -13,16 +15,13 @@ export default class App extends Component {
     return (
       <div className='app'>
         <Header />
-        <Router>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/questions" component={Questions} />
-            <Route exact path="/destinations" component={Destinations} />
-            <Route exact path="/inspiration" component={Inspiration} />
-            <Route exact path="/about" component={About} />
+            <Route path="/questions" component={Questions} />
+            <Route path="/destinations" component={Destinations} />
+            <Route path="/inspiration" component={Inspiration} />
+            <Route path="/about" component={About} />
           </Switch>
-        </Router>
-
       </div>
     );
   }

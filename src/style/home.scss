@@ -1,9 +1,25 @@
+body {
+  h2 {
+    font-size: 18px;
+    padding-top: 30px;
+    padding-bottom: 25px;
+  }
+}
+
+.intro-section {
+  p {
+    font-size: 14px;
+    line-height: 1.7;
+    width: 85%;
+  }
+}
 .introduction-wrapper {
     display: flex;
     justify-content: space-between; /* Para que haya espacio entre las celdas */
     margin: 0 20px; /* Margen en los lados */
     max-width: 1200px; /* Ancho máximo del contenedor */
     width: 100%;
+
   }
   
   
@@ -147,52 +163,67 @@
       padding: 1rem;
       background-color: #f0f0f0;
       border-radius: 0.5rem;
+      padding-bottom: 10px;
       h3 {
         margin-bottom: 0.5rem;
+        font-size: 14px;
+        padding-top: 5px;
+        padding-bottom: 5px;
       }
       p {
         margin: 0;
+        font-size: 13px;
+        width: 80%;
       }
     }
   }
   
-  .destinations-section {
-    .destination-item {
-      position: relative;
-      height: 200px;
-      display: flex;
-      align-items: flex-end;
-      padding: 1rem;
-      color: white;
-      h3 {
-        margin: 0;
-      }
-      &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-      }
-    }
+  .destinations-section .destination-item {
+    width: 100%;
+    height: 400px; /* Ajusta el tamaño según sea necesario */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 10px 0; /* Ajusta el margen según sea necesario */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .destinations-section a {
+    text-decoration: none;
   }
   
-  .testimonials-section {
-    .testimonial-item {
-      padding: 1rem;
-      background-color: #f0f0f0;
-      border-radius: 0.5rem;
-      p {
-        font-style: italic;
-      }
-      h4 {
-        text-align: center;
-        margin-top: 1rem;
-      }
-    }
+  .destinations-section h3 {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con opacidad para el texto */
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+    font-size: 15px;
   }
+  
+  
+  .testimonials-section .testimonial-item {
+    width: 100%;
+    height: 300px; /* Ajusta el tamaño según sea necesario */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: top;
+    color: black; /* Cambia el color del texto a negro */
+  }
+  
+  .testimonials-section p {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con opacidad para el texto */
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 80%; /* Ajusta el ancho máximo del contenedor de texto */
+    text-align: center;
+    font-size: 13px;
+  }
+  
   
   .team-section {
     .team-member {

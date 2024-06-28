@@ -1,10 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import Questions from "./questions";
 import "../../style/home.scss";
 
-export default function () {
+export default function Home() {
   return (
     <div>
       <div className="video-container">
@@ -100,13 +98,15 @@ export default function () {
             <div
               className="grid-item destination-item"
               style={{
-                backgroundImage: `url('/assets/images/marsella.jpg')`,
+                backgroundImage: `url('/assets/images/albania.jpg')`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
               }}
             >
-              <h3>Marsella</h3>
+              <a href="https://justpackandbreathe.com/itinerarios/albania/albania-en-7-dias">
+                <h3>Albania en 7 días</h3>
+              </a>
             </div>
             <div
               className="grid-item destination-item"
@@ -117,8 +117,11 @@ export default function () {
                 backgroundRepeat: "no-repeat",
               }}
             >
-              <h3>París</h3>
+              <a href="https://justpackandbreathe.com/furgo/francia-furgo/paris-en-furgoneta-camper">
+                <h3>París en 3 días</h3>
+              </a>
             </div>
+
             <div
               className="grid-item destination-item"
               style={{
@@ -128,7 +131,9 @@ export default function () {
                 backgroundRepeat: "no-repeat",
               }}
             >
-              <h3>Suiza</h3>
+              <a href="https://justpackandbreathe.com/itinerarios/suiza/suiza-11-dias">
+                <h3>Suiza en 11 días</h3>
+              </a>
             </div>
           </div>
         </div>

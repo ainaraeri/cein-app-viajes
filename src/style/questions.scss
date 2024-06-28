@@ -39,7 +39,6 @@
         text-align: left;
         width: 100%;
         max-width: 600px;
-        padding-bottom: 5px;
 
         h3 {
           font-size: 1.5rem;
@@ -52,13 +51,12 @@
           align-items: center;
           margin-bottom: 0.5rem;
 
-
           input[type="radio"] {
             margin-right: 0.5rem;
           }
 
           label {
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: #555;
           }
         }
@@ -67,7 +65,7 @@
 
     .submit-button {
       padding: 0.75rem 1.5rem;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 600;
       color: white;
       background-color: #7FBEA9;
